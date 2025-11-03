@@ -1,5 +1,6 @@
 import textstat
 import numpy as np
+from sklearn.metrics.pairwise import cosine_similarity
 from nltk.tokenize import sent_tokenize
 import nltk
 nltk.download('punkt_tab')
@@ -27,11 +28,11 @@ def predict_quality(word_count, sentence_count, readability):
     features = np.array([[word_count, sentence_count, readability]])
     return quality_model.predict(features)[0]
 
-def find_similar(text, corpus, corpus_urls, threshold=0.75):
-    if embedder is None:
-        return []
-    new_emb = embedder.encode([text])
-    corpus_emb = np.load(os.path.join(os.path.dirname(__file__), "../../data/embeddings.npy"))
-    sims = cosine_similarity(new_emb, corpus_emb).flatten()
-    indices = np.where(sims > threshold)[0]
-    return [{"url": corpus_urls[i], "similarity": float(sims[i])} for i in indices]
+
+def find_similar(query_embedding, corpus_embeddings, corpus_urls, threshold=0.7):
+    """Return top similar URLs with their similarity scores"""
+    sims = cosine_similarity([query_embedding], corpus_embeddings)[0]
+    top_idx = np.argsort(sims)[::-1][:3]  # top 3 matches
+    top_urls = [(corpus_urls[i], float(sims[i])) for i in top_idx if sims[i] > threshold]
+    duplicate = any(s > 0.85 for s in sims)  # less strict match
+    return top_urls, duplicate
