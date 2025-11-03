@@ -1,81 +1,101 @@
-🚀 SEO Content Quality & Duplicate Detector
-🧠 Overview
+# 🚀 SEO Content Quality & Duplicate Detector  
 
-A machine learning and NLP pipeline that evaluates webpage SEO quality, readability, and detects duplicate or thin content.
-It parses HTML, extracts key linguistic and structural features, computes similarity between pages, and predicts overall content quality (Low / Medium / High).
+### 📘 Project Overview
+This project delivers an **end-to-end AI + NLP pipeline** to evaluate webpage SEO content quality and detect near-duplicates.  
+It intelligently parses HTML, extracts linguistic and structural features, computes content similarity,  
+and predicts overall quality — **Low**, **Medium**, or **High** — using machine learning.  
 
-### ⚙️ Setup Instructions
+---
+
+## ⚙️ Tech Stack
+**Languages:** Python 3.9+  
+**Core Libraries:** `BeautifulSoup4`, `textstat`, `sentence-transformers`, `scikit-learn`, `pandas`, `nltk`  
+**Interface:** Jupyter Notebook & Streamlit (for real-time analysis)  
+
+---
+
+## 🧩 Features
+✅ **HTML Parsing:** Extracts titles and main body text from raw HTML  
+✅ **Feature Engineering:** Word/sentence count, readability (Flesch), TF-IDF keywords, embeddings  
+✅ **Duplicate Detection:** Cosine similarity on embeddings or TF-IDF vectors  
+✅ **Thin Content Flagging:** Identifies low-word-count pages (<500 words)  
+✅ **Quality Scoring Model:** Random Forest classifier for SEO quality prediction  
+✅ **Real-Time Demo:** Live Streamlit app for instant URL evaluation  
+
+---
+
+## 🧠 Workflow
+Input HTML/URLs → Clean & Parse → Extract NLP Features → Detect Duplicates →
+Train Quality Model → Predict (Low / Medium / High) → Real-Time Streamlit Analysis
+
+yaml
+Copy code
+
+---
+
+## ⚙️ Setup Instructions
 ```bash
+# Clone the repository
 git clone https://github.com/annavinod/seo-content-detector
 cd seo-content-detector
-pip install -r requirements.txt
-jupyter notebook notebooks/seo_pipeline.ipynb
-```
 
-### ⚡ Quick Start
-1️⃣ Open the notebook `notebooks/seo_pipeline.ipynb`  
-2️⃣ Run all cells to reproduce the entire pipeline  
-3️⃣ For real-time analysis, use:
-```python
+# Install dependencies
+pip install -r requirements.txt
+
+# Launch the main notebook
+jupyter notebook notebooks/seo_pipeline.ipynb
+⚡ Quick Start
+python
+Copy code
+from utils.scorer import analyze_url
+
+# Analyze any webpage URL in real-time
 result = analyze_url("https://example.com/article")
 print(result)
-```
+🌐 Live Demo
+🎯 Try it here: SEO Content Detector App →
 
+Analyze any live webpage for readability, SEO score, and duplication — directly from your browser.
 
-🌐 Deployed Streamlit App
+📊 Model Performance
+Metric	Score
+Model	Random Forest Classifier
+Accuracy	0.78
+F1-Score	0.77
+Duplicate Pairs	3
+Thin Content Pages	6 (≈10%)
 
-👉 Click here to view the live app
+💡 Key Design Decisions
+Parsing Strategy: Focused on <p>, <article>, and <main> for core content extraction
 
-🔍 Key Features
+Similarity Threshold: Cosine similarity ≥ 0.80 → duplicate
 
-HTML Parsing: Extracts clean body text and metadata using BeautifulSoup
+Feature Selection: Chose readability + count features + embeddings for explainability
 
-Feature Engineering: Word count, sentence count, Flesch Reading Ease, top keywords, embeddings
-
-Duplicate Detection: Cosine similarity on TF-IDF or embeddings to flag near-duplicates
-
-Quality Scoring: Classifies each page as Low, Medium, or High using Random Forest
-
-Real-Time Demo: Live URL analysis directly in the Streamlit app
-
-📊 Results Summary
-
-Model: Random Forest Classifier
-
-Accuracy: 0.78
-
-F1-Score: 0.77
-
-Duplicate Pairs: 3
-
-Thin Content Pages: 6 (≈10%)
-
-💡 Key Decisions
-
-Libraries: Used beautifulsoup4, textstat, sentence-transformers, and scikit-learn for efficiency and reliability.
-
-Threshold: Set similarity cutoff at 0.80 for near-duplicate detection.
-
-Model: Random Forest chosen for interpretability and consistent performance.
-
-HTML Parsing Strategy: Focused on <p>, <article>, and <main> tags for meaningful content extraction.
+Model Choice: Random Forest for stability and interpretability over deep models
 
 ⚠️ Limitations
+Pages heavy with JavaScript or structured markup may yield incomplete text extraction
 
-Complex or script-heavy pages may have incomplete text extraction.
+Readability metrics can vary by domain type (technical vs. general audience)
 
-Readability metrics depend on textual density and type.
-
-Quality labels were synthetically generated — human-labeled SEO data would improve accuracy.
+Current quality labels are synthetic — human-labeled SEO data would improve performance
 
 ✅ Evaluation Checklist
+ End-to-end pipeline executes without errors
 
- End-to-end pipeline runs in Jupyter
+ Real-time analyze_url() function operational
 
- Real-time analyze_url() function works
+ Streamlit app deployed & stable
 
- Streamlit app deployed successfully
+ Clean modular codebase
 
- Clean project structure with documentation
+ Well-documented and reproducible project
 
- GitHub repo public and reproducible
+🏁 Submission Summary
+Status: ✔️ Complete & Deployed
+Bonus: Streamlit Cloud Deployment Achieved
+Author: Anna Vinod
+Live Demo: seo-content-detector-9wgjet3hafdemayusgyn9j.streamlit.app
+
+“Data is the new SEO — structured, measurable, and intelligent.” 🌐✨
