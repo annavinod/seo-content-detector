@@ -28,19 +28,14 @@ def predict_quality(word_count, sentence_count, readability):
     features = np.array([[word_count, sentence_count, readability]])
     return quality_model.predict(features)[0]
 
-def find_similar(query_embedding, corpus_embeddings, corpus_urls, threshold=0.8):
-    # Ensure both embeddings are proper numpy arrays with 2D shape
-    query_embedding = np.array(query_embedding).reshape(1, -1)
-    corpus_embeddings = np.array(corpus_embeddings)
+def find_similar(text, corpus, corpus_urls, threshold=0.75):
+    if embedder is None:
+        return []
+    new_emb = embedder.encode([text])
+    corpus_emb = np.load(os.path.join(os.path.dirname(__file__), "../../data/embeddings.npy"))
+    sims = cosine_similarity(new_emb, corpus_emb).flatten()
+    indices = np.where(sims > threshold)[0]
+    return [{"url": corpus_urls[i], "similarity": float(sims[i])} for i in indices]
 
-    # Compute cosine similarity
-    sims = cosine_similarity(query_embedding, corpus_embeddings)[0]
 
-    # Sort results by similarity descending
-    ranked = sorted(list(zip(corpus_urls, sims)), key=lambda x: x[1], reverse=True)
-    top_matches = [(url, round(score * 100, 2)) for url, score in ranked[:3]]
 
-    # Determine if any duplicates exceed threshold
-    duplicate = any(score >= threshold for _, score in ranked)
-
-    return top_matches, duplicate
