@@ -4,20 +4,23 @@
 A machine learning and NLP pipeline that evaluates webpage SEO quality, readability, and detects duplicate or thin content.
 It parses HTML, extracts key linguistic and structural features, computes similarity between pages, and predicts overall content quality (Low / Medium / High).
 
-⚙️ Setup Instructions
+### ⚙️ Setup Instructions
+```bash
 git clone https://github.com/annavinod/seo-content-detector
 cd seo-content-detector
 pip install -r requirements.txt
 jupyter notebook notebooks/seo_pipeline.ipynb
+```
 
-⚡ Quick Start
-
-1️⃣ Open the notebook notebooks/seo_pipeline.ipynb
-2️⃣ Run all cells to reproduce the entire pipeline
+### ⚡ Quick Start
+1️⃣ Open the notebook `notebooks/seo_pipeline.ipynb`  
+2️⃣ Run all cells to reproduce the entire pipeline  
 3️⃣ For real-time analysis, use:
-
+```python
 result = analyze_url("https://example.com/article")
 print(result)
+```
+
 
 🌐 Deployed Streamlit App
 
