@@ -28,8 +28,6 @@ and predicts overall quality — **Low**, **Medium**, or **High** — using mach
 Input HTML/URLs → Clean & Parse → Extract NLP Features → Detect Duplicates →
 Train Quality Model → Predict (Low / Medium / High) → Real-Time Streamlit Analysis
 
-yaml
-Copy code
 
 ---
 
@@ -44,26 +42,28 @@ pip install -r requirements.txt
 
 # Launch the main notebook
 jupyter notebook notebooks/seo_pipeline.ipynb
+
 ⚡ Quick Start
-python
-Copy code
 from utils.scorer import analyze_url
 
 # Analyze any webpage URL in real-time
 result = analyze_url("https://example.com/article")
 print(result)
+
 🌐 Live Demo
 🎯 Try it here: SEO Content Detector App →
 
 Analyze any live webpage for readability, SEO score, and duplication — directly from your browser.
 
 📊 Model Performance
-Metric	Score
-Model	Random Forest Classifier
-Accuracy	0.78
-F1-Score	0.77
-Duplicate Pairs	3
-Thin Content Pages	6 (≈10%)
+
+| Metric                 |           Score          |
+| :--------------------- | :----------------------: |
+| **Model**              | Random Forest Classifier |
+| **Accuracy**           |           0.78           |
+| **F1-Score**           |           0.77           |
+| **Duplicate Pairs**    |             3            |
+| **Thin Content Pages** |         6 (≈10%)         |
 
 💡 Key Design Decisions
 Parsing Strategy: Focused on <p>, <article>, and <main> for core content extraction
