@@ -1,6 +1,8 @@
 import textstat
 import numpy as np
 from nltk.tokenize import sent_tokenize
+import nltk
+nltk.download('punkt_tab')
 from sklearn.metrics.pairwise import cosine_similarity
 from sentence_transformers import SentenceTransformer
 import joblib
