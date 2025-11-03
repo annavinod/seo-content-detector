@@ -22,12 +22,17 @@ def analyze_url(url):
     if not os.path.exists(data_path):
         raise FileNotFoundError(f"Dataset not found at {data_path}. Please upload features.csv to /data/.")
     
-    corpus = pd.read_csv(data_path)
+   corpus = pd.read_csv(os.path.join(os.path.dirname(__file__), "../../data/features.csv"))
 
-    # 4️⃣ Create embeddings for new page + corpus
-    query_emb = model.encode(text)
-    corpus_embeddings = model.encode(corpus["text"].astype(str).tolist())
-    corpus_urls = corpus["url"].tolist()
+# Try to find the correct text column dynamically
+possible_cols = ["text", "content", "body_text", "clean_text", "article"]
+text_col = next((c for c in possible_cols if c in corpus.columns), None)
+
+if text_col is None:
+    raise KeyError("No valid text column found in features.csv. Expected one of: text, content, body_text, clean_text, article")
+
+# Encode corpus text using the correct column
+corpus_embeddings = model.encode(corpus[text_col].astype(str).tolist())
 
     # 5️⃣ Find most similar pages
     top_urls, duplicate = find_similar(query_emb, corpus_embeddings, corpus_urls)
